@@ -1,0 +1,140 @@
+<html>
+
+    <head>
+        <!-- Googe Charts Script - For Graphs-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!-- Bootstrap Style Sheets & JS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+        <!-- Simulation code-->
+        <script src="main.js"></script>
+
+        <!-- Stylesheet-->
+        <link rel="stylesheet" href="style.css" />
+
+        <title>Collision Simulation</title>
+        <style>
+            
+
+        </style>
+    </head>
+
+    <body>
+        <div id = "playButton">
+            <div id="play">
+                <h1>Welcome to the collision simulator!</h1>
+                <p>Visit the wiki on github for more information on how this works!</p>
+                <h3>To use the simulator:</h3>
+                <ul>
+                    <li>Add a particle</li>
+                    <li>Change the coefficients of friction</li>
+                    <li>Change the collision effectiveness</li>
+                    <li>Display velocity vectors</li>
+                    <li>Change what the graph displays in each axis</li>
+                    <li>View the graph below the simulation</li>
+                </ul>
+                <button onclick="main('myCanvas')" class="btn btn-primary">Run Simulation</button>
+            </div>
+        </div>
+        <h1>Collision Simulator</h1>
+
+        <div class="container-fixed">
+            <div class="row justify-content-start">
+                <div class=" col-sm-12 col-md-12 col-lg-6 col-xl-7" id="quote-2-high">
+                    <div class="card bg-light" >
+                        <h4 class="card-header">Simulation</h4>
+                        <p class="card-text"><center><canvas id="myCanvas" width="750" height="750" style="border: solid 2px black;">Your browser does not support HTML 5</canvas> </center></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 fix">
+                    <div class="row justify-content-start" id="top-row">
+                        <div class="col mb-3 fix">
+                            <div class="card bg-light fix">
+                                <h4 class="card-header mb-3">Modifiers</h4>
+                                <p class="card-text">Coefficient of Kinetic Friction: <input type="number" value="0.00005" step="0.000001" id="fr" onchange="frChange()" class="numinput" style="width: 100px;"> <br> 
+                                    <!-- Coefficient of Static Friction: <input type="number" value="0.005" step="0.000001" id="sfr" onchange="sfrChange()" class="numinput"> <br> /!-->
+                                    Collision Effectiveness (100% most efficient): <input type="number" id="effe" value="85" class="numinput" onchange="effeChange()">% <br>
+                                    <label class="checkbox-inline"><input type="checkbox" value="" id="drawvelocity" name="drawvelocity" > Draw Velocity Vectors</label>
+                                    </p>
+                            </div>
+                            <br>
+                            <div class="card bg-light">
+                                <h4 class="card-header">Add Particles</h4>
+                                <p class="card-text">
+                                    <form action="#" onsubmit="addParticle(); return false" name="add" id="add" style="padding-left: 15px; padding-right: 15px; margin-top: -20;">
+                                        <div class="form-group">
+                                            <label for="mass">Mass</label>
+                                            <input type="number" class="form-control" id="mass" placeholder="Enter Mass">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mass">X-Velocity</label>
+                                            <input type="number" class="form-control" id="xvel" placeholder="Enter Starting X-Velocity">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mass">Y-Velocity</label>
+                                            <input type="number" class="form-control" id="yvel" placeholder="Enter Starting Y-Velocity">
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Add Particle">
+                                    </form>
+                                </p>
+                            </div>
+        
+                            <br>
+        
+                            <div class="card bg-light">
+                                <h4 class="card-header">Graph Editor</h4>
+                                <p class="card-text">
+                                    <form style="padding-left: 15px; padding-right: 15px; margin-top: -20;">
+                                    <div class="form-group">
+                                        <label for="graphx">Graph X-Axis</label>
+                                        <select class="form-control" id="graphx">
+                                    </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="graphy">Graph Y-Axis</label>
+                                        <select class="form-control" id="graphy">
+                                    </select>
+                                    </div>
+                                </form>
+                                </p>
+                                </div>
+                        </div>
+                        <div class="row justify-content-start" id="bottom-row">
+                            <div class="col mb-6">
+                            
+                            </div>
+                </div>
+                </div>
+               
+            </div>
+        </div>
+        <br>
+        <div class="card bg-light" style="max-width: 75%;">
+            <h4 class="card-header mb-3">Placed Particles</h4>
+            <p class="card-text">
+                <table id="particles" class="table table-striped">
+                    <tr style="background-color: #D9EDF7;">
+                        <th>Mass</th>
+                        <th>X Velocity</th>
+                        <th>Y Velocity</th>
+                        <th>X Acceleration</th>
+                        <th>Y Acceleration</th>
+                    </tr>
+                </table>
+                <h5 class="card-title" style="padding-left: 15px;">Total Kinetic Energy: <span id="ek"></span> J</h5>
+                </p>
+        </div>
+        <br>
+        <div class="card bg-light" style="max-width: 75%;">
+            <h4 class="card-header mb-3">Graph (Updates Every 100s)</h4>
+            <p class="card-text">
+                <div id="curve_chart"></div>
+            </p>
+        </div>
+    </body>
+</html>
